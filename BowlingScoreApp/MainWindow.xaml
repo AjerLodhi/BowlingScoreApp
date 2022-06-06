@@ -1,0 +1,106 @@
+﻿<Window x:Class="BowlingScoreApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BowlingScoreApp.ViewModels"
+        Title="Bowling Score" Height="280" ResizeMode="NoResize" Width="860">
+    <Window.DataContext>
+        <local:ScoreViewModel/>
+    </Window.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid ShowGridLines="True">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="70"/>
+                <ColumnDefinition Width="70"/>
+                <ColumnDefinition Width="70"/>
+                <ColumnDefinition Width="70"/>
+                <ColumnDefinition Width="70"/>
+                <ColumnDefinition Width="70"/>
+                <ColumnDefinition Width="70"/>
+                <ColumnDefinition Width="70"/>
+                <ColumnDefinition Width="70"/>
+                <ColumnDefinition Width="210"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/> 
+            </Grid.RowDefinitions>
+
+            <TextBlock HorizontalAlignment ="Center" VerticalAlignment ="Center" Grid.Row="0" Grid.Column="0">1</TextBlock>
+            <TextBlock HorizontalAlignment ="Center" VerticalAlignment ="Center" Grid.Row="0" Grid.Column="1">2</TextBlock>
+            <TextBlock HorizontalAlignment ="Center" VerticalAlignment ="Center" Grid.Row="0" Grid.Column="2">3</TextBlock>
+            <TextBlock HorizontalAlignment ="Center" VerticalAlignment ="Center" Grid.Row="0" Grid.Column="3">4</TextBlock>
+            <TextBlock HorizontalAlignment ="Center" VerticalAlignment ="Center" Grid.Row="0" Grid.Column="4">5</TextBlock>
+            <TextBlock HorizontalAlignment ="Center" VerticalAlignment ="Center" Grid.Row="0" Grid.Column="5">6</TextBlock>
+            <TextBlock HorizontalAlignment ="Center" VerticalAlignment ="Center" Grid.Row="0" Grid.Column="6">7</TextBlock>
+            <TextBlock HorizontalAlignment ="Center" VerticalAlignment ="Center" Grid.Row="0" Grid.Column="7">8</TextBlock>
+            <TextBlock HorizontalAlignment ="Center" VerticalAlignment ="Center" Grid.Row="0" Grid.Column="8">9</TextBlock>
+            <TextBlock HorizontalAlignment ="Center" VerticalAlignment ="Center" Grid.Row="0" Grid.Column="9">10</TextBlock>
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <ListView ItemsSource="{Binding ScoreCard.Frames}">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal"></StackPanel>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <Grid ShowGridLines="True">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30"/>
+                                    <ColumnDefinition Width="30"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Label Content="{Binding FirstShot}"  Grid.Column="0" HorizontalAlignment="Center"/>
+                                <Label Content="{Binding SecondShot}" Grid.Column="1" HorizontalAlignment="Center"/>
+
+                            </Grid>
+                            <Label Content="{Binding Score}" HorizontalAlignment ="Center" VerticalAlignment ="Center"  Visibility="Visible"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="220"/>
+                <ColumnDefinition Width="170"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Label Content="Enter your score after your turn:" Margin="0,0,0,0"  HorizontalAlignment ="Left" VerticalAlignment ="Top" Grid.Row="0" Grid.Column="0"/>
+            <TextBox Text="{Binding Score , UpdateSourceTrigger=PropertyChanged}" Margin="0,5,10,0" Width="12" HorizontalAlignment ="Right" VerticalAlignment ="Top" Grid.Row="0" Grid.Column="0">
+                <TextBox.InputBindings>
+                    <KeyBinding Command="{Binding UpdateScore}" Key="Enter"/>
+                </TextBox.InputBindings>
+            </TextBox>
+            <Label Content="Enter if you get a Strike/Spare: " Margin="0,30,0,0" HorizontalAlignment ="Left" VerticalAlignment ="Center" Grid.Row="0" Grid.Column="0"/>
+            <TextBox Text="{Binding CharScore , UpdateSourceTrigger=PropertyChanged}" Margin="0,30,10,0" Width="12" HorizontalAlignment ="Right" VerticalAlignment ="Center" Grid.Row="0" Grid.Column="0" MaxLength="1">
+                <TextBox.InputBindings>
+                    <KeyBinding Command="{Binding UpdateCharScore}" Key="Enter"/>
+                </TextBox.InputBindings>
+            </TextBox>
+
+
+            <Button Grid.Column="1" Content="Add" FontSize="20" Command="{Binding Path=UpdateScore}" VerticalAlignment="Top" Height="53"/>
+            <Button Grid.Column="1" Content="Add Strike/Spare" FontSize="20" Command="{Binding Path=UpdateCharScore}" VerticalAlignment="Bottom" Height="53"/>
+            <Button Grid.Column="2" Content="Reset" FontSize="20" Command="{Binding Path=ResetTable}"/>
+            <Label Grid.Column="3"  Content="FINAL SCORE: " FontSize="25" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+            <Label Grid.Column="4"   Content="{Binding ScoreCard.Score}" FontSize="25" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        </Grid>
+    </Grid>
+</Window>
+
